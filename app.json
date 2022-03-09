@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "debt-tracker-mobile",
+    "slug": "debt-tracker-mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "debt-tracker-mobile"
+}
