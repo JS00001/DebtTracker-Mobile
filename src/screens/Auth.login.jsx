@@ -1,22 +1,24 @@
-import { TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
+import { TextInput, View, Keyboard } from 'react-native';
 
 import tw from 'twrnc';
-import { Keyboard } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../api';
 import useForm from '../hooks/useForm';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
+import AuthAction from '../redux/actions/authAction';
 
-export default function ({ navigation }) {
+export default function () {
+	const dispatch = useDispatch();
 	const { mutate, isLoading } = useMutation(api.login, {
 		onSuccess: async (data) => {
 			await AsyncStorage.setItem('token', data.token);
-			navigation.navigate('Home');
+			dispatch(AuthAction(data.token));
 		},
-		onError: (error) => {
+		onError: async () => {
 			alert('Invalid Login');
 		},
 	});
@@ -33,16 +35,17 @@ export default function ({ navigation }) {
 			<TextInput
 				name='username'
 				value={values.username}
+				textContentType='username'
 				onChangeText={(text) => setValues('username', text)}
 				placeholder='Username'
-				style={tw`bg-gray-200 w-5/6 p-4 rounded-lg my-1`}
+				style={tw`bg-gray-100 w-5/6 p-4 rounded-lg my-1`}
 			/>
 			<TextInput
 				name='password'
 				value={values.password}
 				onChangeText={(text) => setValues('password', text)}
 				placeholder='Password'
-				style={tw`bg-gray-200 w-5/6 p-4 rounded-lg my-1`}
+				style={tw`bg-gray-100 w-5/6 p-4 rounded-lg my-1`}
 				secureTextEntry
 			/>
 			<Button onPress={onSubmit}>Login</Button>

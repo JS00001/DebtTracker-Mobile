@@ -1,6 +1,8 @@
 import { View, Text } from 'react-native';
-import Button from '../components/Button';
+
 import tw from 'twrnc';
+
+import Button from '../components/Button';
 
 export default function ({ navigation }) {
 	const handleLoginPress = () => {
